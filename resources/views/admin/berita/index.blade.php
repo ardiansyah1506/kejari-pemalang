@@ -141,7 +141,7 @@
                         quill.root.innerHTML = data.deskripsi;
                         if (data.foto) {
                             // Jika ada foto, buat elemen link
-                            let fotoUrl = `{{ asset('foto_berita/${data.foto}') }}`;
+                            let fotoUrl = data.foto.startsWith('http') ? data.foto : `{{ asset('foto_berita') }}/${data.foto}`;
                             $('#link').html(
                                 `<a href="${fotoUrl}" class="bg-blue-100 w-full text-blue-600 py-1 p-2 rounded-sm" target="_blank">Link Gambar</a>`
                             );

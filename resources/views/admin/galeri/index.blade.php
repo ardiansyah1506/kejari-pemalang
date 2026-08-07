@@ -37,7 +37,7 @@
             <div class="h-full flex w-full justify-center items-center  p-2">
                 <div class="relative bg-white border rounded-lg shadow-md transform transition duration-500 hover:scale-105">
                     <img class="rounded-t-lg w-full aspect-[4/3] object-contain"
-                        src="{{ asset('foto_galeri/' . $galery->foto) }}" loading="lazy">
+                        src="{{ str_starts_with($galery->foto, 'http') ? $galery->foto : asset('foto_galeri/' . $galery->foto) }}" loading="lazy">
                     <div class="px-4 pb-3 py-2">
                         <div>
                             <p class="antialiased text-gray-600 dark:text-gray-400 text-sm break-all">
@@ -119,7 +119,7 @@
                         $('input[name="judul"]').val(data.judul);
                         if (data.foto) {
                             // Jika ada foto, buat elemen link
-                            let fotoUrl = `{{ asset('foto_galeri/${data.foto}') }}`;
+                            let fotoUrl = data.foto.startsWith('http') ? data.foto : `{{ asset('foto_galeri') }}/${data.foto}`;
                             $('#link').html(
                                 `<a href="${fotoUrl}" class="bg-blue-100 w-full text-blue-600 py-1 p-2 rounded-sm" target="_blank">Link Gambar</a>`
                             );
@@ -182,7 +182,7 @@
                                     <div class="relative bg-white border rounded-lg shadow-md transform transition duration-500 hover:scale-105">
                                         <div class="flex justify-center">
                                             <a href="#">
-                                                <img class="rounded-t-lg w-full aspect-[4/3]" src="{{ asset('foto_galeri/') }}/${galery.foto}" loading="lazy">
+                                                <img class="rounded-t-lg w-full aspect-[4/3]" src="${galery.foto.startsWith('http') ? galery.foto : `{{ asset('foto_galeri/') }}/${galery.foto}`}" loading="lazy">
                                             </a>
                                         </div>
                                         <div class="px-4 pb-3 py-2">

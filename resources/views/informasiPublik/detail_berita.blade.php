@@ -18,42 +18,40 @@
 @endsection
 
 @section('content')
-    <div class="w-full bg-white p-8 min-h-[500px] rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-green-800 mb-4">{{ $data->judul }}</h1>
-        <p class="text-sm text-[#006E61] mb-5 capitalize">
-            {{ $data->publisher }} | 
-            @php
-                $createdAt = \Carbon\Carbon::parse($data->created_at);
-                $now = \Carbon\Carbon::now();
-
-                // Hitung selisih waktu
-                $diffInMinutes = $now->diffInMinutes($createdAt);
-                $diffInHours = $now->diffInHours($createdAt);
-                $diffInDays = $now->diffInDays($createdAt);
-                
-                // Format tanggal sesuai ketentuan
-                if ($diffInMinutes < 1) {
-                    // Jika kurang dari 1 menit
-                    echo 'baru saja';
-                } elseif ($diffInMinutes < 60) {
-                    // Jika kurang dari 1 jam
-                    echo $diffInMinutes . ' menit yang lalu';
-                } elseif ($diffInHours < 24) {
-                    // Jika kurang dari 1 hari
-                    echo $diffInHours . ' jam yang lalu';
-                } elseif ($diffInDays <= 7) {
-                    // Jika kurang dari atau sama dengan 7 hari
-                    echo $createdAt->diffForHumans(); // Misal "2 hari yang lalu"
-                } else {
-                    // Jika lebih dari 7 hari
-                    echo $createdAt->translatedFormat('l, d F Y'); // Format: "Sabtu, 05 Oktober 2024"
-                }
-            @endphp
-        </p>
-        <img src="{{ asset('foto_berita/' . $data->foto) }}" alt="Kejaksaan Agung"
-            class="aspect-[4/3] mr-5 mb-4 w-full md:w-1/3 float-left object-cover rounded-lg">
-        <div class="w-full md:w-full text-justify">
-            {!! $data->deskripsi !!}
+    <div class="container mx-auto px-4 py-8">
+        <div class="w-full max-w-6xl mx-auto bg-white p-6 md:p-10 min-h-[500px] rounded-xl shadow-lg border border-gray-100">
+            <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-green-800 mb-4 leading-tight">{{ $data->judul }}</h1>
+            <p class="text-sm md:text-base text-[#006E61] mb-6 capitalize font-medium border-b pb-4">
+                {{ $data->publisher }} | 
+                @php
+                    $createdAt = \Carbon\Carbon::parse($data->created_at);
+                    $now = \Carbon\Carbon::now();
+                    $diffInMinutes = $now->diffInMinutes($createdAt);
+                    $diffInHours = $now->diffInHours($createdAt);
+                    $diffInDays = $now->diffInDays($createdAt);
+                    
+                    if ($diffInMinutes < 1) {
+                        echo 'baru saja';
+                    } elseif ($diffInMinutes < 60) {
+                        echo $diffInMinutes . ' menit yang lalu';
+                    } elseif ($diffInHours < 24) {
+                        echo $diffInHours . ' jam yang lalu';
+                    } elseif ($diffInDays <= 7) {
+                        echo $createdAt->diffForHumans();
+                    } else {
+                        echo $createdAt->translatedFormat('l, d F Y');
+                    }
+                @endphp
+            </p>
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="w-full lg:w-5/12 flex-shrink-0">
+                    <img class="w-full aspect-[4/3] object-cover rounded-lg shadow-md"
+                         src="{{ str_starts_with($data->foto, 'http') ? $data->foto : asset('foto_berita/' . $data->foto) }}" alt="{{ $data->judul }}">
+                </div>
+                <div class="w-full lg:w-7/12 text-gray-700 text-justify leading-relaxed prose max-w-none">
+                    {!! $data->deskripsi !!}
+                </div>
+            </div>
         </div>
     </div>
 @endsection

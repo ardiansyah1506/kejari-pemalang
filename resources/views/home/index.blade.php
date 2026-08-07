@@ -84,7 +84,7 @@
                 <div class="grid md:grid-cols-4 grid-cols-1 gap-4">
                     @foreach ($data as $berita)
                         <div class="grid grid-cols-1 rounded-lg ">
-                            <img src="{{ asset('foto_berita/' . $berita->foto) }}"
+                            <img src="{{ str_starts_with($berita->foto, 'http') ? $berita->foto : asset('foto_berita/' . $berita->foto) }}"
                                 class="aspect-[4/3] w-full object-cover rounded-lg" alt="">
                             <a href="{{ route('berita.detail', $berita->id) }}"
                                 class="text-md md:text-xl font-semibold text-green-800">{{ $berita->judul }}</a>

@@ -39,7 +39,7 @@
         @else
             <div class="grid md:grid-cols-4 grid-cols-2  gap-4 grid-row-2">
                 <div class=" row-span-2 aspect-[4/3] col-span-2">
-                    <img class="w-full h-full object-cover rounded-md" src="{{ asset('foto_galeri/' . $galeriFirst->foto) }}"
+                    <img class="w-full h-full object-cover rounded-md" src="{{ str_starts_with($galeriFirst->foto, 'http') ? $galeriFirst->foto : asset('foto_galeri/' . $galeriFirst->foto) }}"
                         alt="Random image">
                 </div>
 
@@ -48,12 +48,12 @@
                         @if ($loop->iteration < 4)
                             <div class="relative  col-span-1 row-span-1 ">
                                 <img class="w-full h-full object-cover rounded-md"
-                                    src="{{ asset('foto_galeri/' . $data->foto) }}" alt="Random image">
+                                    src="{{ str_starts_with($data->foto, 'http') ? $data->foto : asset('foto_galeri/' . $data->foto) }}" alt="Random image">
                             </div>
                         @else
                             <div class="relative  col-span-1 row-span-1 ">
                                 <img class="w-full h-full object-cover rounded-md"
-                                    src="{{ asset('foto_galeri/' . $data->foto) }}" alt="Random image">
+                                    src="{{ str_starts_with($data->foto, 'http') ? $data->foto : asset('foto_galeri/' . $data->foto) }}" alt="Random image">
                                 <div
                                     class="absolute inset-0 rounded-md cursor-pointer   bg-gray-600 bg-opacity-50 flex items-center justify-center">
                                     <h2 class="text-white flex flex-col text-center gap-2  font-bold hover:scale-110">
@@ -82,23 +82,28 @@
                 <p class="text-gray-600 text-md">Data belum tersedia</p>
             </div>
         @else
-            <div class="grid md:grid-cols-4 grid-cols-1 gap-6">
+            <div class="grid lg:grid-cols-2 grid-cols-1 gap-6">
                 @foreach ($berita as $data)
-                    <div
-                        class="flex md:flex-row col-span-1 md:col-span-4 flex-col-reverse gap-5 justify-center items-center p-4">
-                        <div>
-                            <a href="{{ route('berita.detail', $data->id) }}"
-                                class="text-2xl font-semibold text-green-800 mb-2">{{ $data->judul }}</a>
-                            <p class="text-gray-600  bg-red-500">{!! $data->deskripsi !!}</p>
-                            <div class="flex justify-between text-sm items-center mt-5 text-gray-500">
-                                <span class="mr-2 ">{{ $data->created_at->format('d/m/Y') }}</span>
+                    <div class="flex flex-col sm:flex-row bg-white rounded-xl shadow border hover:shadow-md transition-shadow overflow-hidden">
+                        <div class="w-full sm:w-2/5 md:w-1/3 flex-shrink-0">
+                            <img src="{{ str_starts_with($data->foto, 'http') ? $data->foto : asset('foto_berita/' . $data->foto) }}" 
+                                 class="w-full h-full object-cover aspect-video sm:aspect-auto" alt="{{ $data->judul }}">
+                        </div>
+                        <div class="w-full sm:w-3/5 md:w-2/3 p-5 flex flex-col justify-between">
+                            <div>
+                                <a href="{{ route('berita.detail', $data->id) }}" class="text-xl font-bold text-green-800 mb-2 hover:text-green-600 line-clamp-2 leading-tight">
+                                    {{ $data->judul }}
+                                </a>
+                                <div class="text-gray-600 text-sm mt-3 line-clamp-3">
+                                    {!! strip_tags($data->deskripsi) !!}
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-500 mt-4 capitalize">
+                                {{ $data->publisher }} &bull; {{ $data->created_at->format('d M Y') }}
                             </div>
                         </div>
-                        <img src="{{ asset('foto_berita/' . $data->foto) }}" class="md:aspect-[4/3] md:w-1/4  "
-                            alt="">
                     </div>
                 @endforeach
-
             </div>
             <a href="{{ route('berita') }}" class="block text-[#006E61] text-center w-full p-2 border shadow-sm">
                 Lihat Semua Berita
