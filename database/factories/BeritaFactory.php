@@ -31,10 +31,18 @@ class BeritaFactory extends Factory
             'Sebagai bentuk penyelesaian perkara di luar pengadilan, Kejaksaan Negeri Pemalang menghentikan penuntutan berdasarkan keadilan restoratif (restorative justice). Hal ini dilakukan setelah pelaku dan korban sepakat untuk berdamai tanpa ada intervensi.'
         ];
 
+        $fotos = [
+            'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1475506631979-72412c606f4d?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1589391886645-151af01bb3f3?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=800&auto=format&fit=crop'
+        ];
+
         return [
             'judul' => fake()->randomElement($judul),
             'deskripsi' => fake()->randomElement($deskripsi) . ' ' . fake()->randomElement($deskripsi),
-            'foto' => 'https://placehold.co/800x600.png?text=Thumbnail+Berita+\n' . fake()->randomElement(['800x600', '16:9', '4:3']),
+            'foto' => fake()->randomElement($fotos),
             'publisher' => fake()->randomElement(['Admin Kejari', 'Tim Intelijen Kejari', 'Tim Pidum Kejari']),
         ];
     }

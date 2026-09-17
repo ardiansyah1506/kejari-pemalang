@@ -25,9 +25,16 @@ class GaleriFactory extends Factory
             'Bhakti Sosial Kejaksaan Negeri Pemalang'
         ];
 
+        $fotos = [
+            'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop'
+        ];
+
         return [
             'judul' => fake()->randomElement($kegiatan) . ' Tahun 202' . fake()->numberBetween(0, 4),
-            'foto' => 'https://placehold.co/600x400.png?text=Foto+Dokumentasi+\n' . fake()->randomElement(['800x600', '600x400', '4x6', '3x4', '16:9']),
+            'foto' => fake()->randomElement($fotos),
         ];
     }
 }
